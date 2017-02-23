@@ -1,0 +1,57 @@
+﻿@model ContactUsRenderModel
+
+<div class="page-wrap contact-us-page" style="text-align:center;">
+	<h1>
+		<!--@Model.PageHeader-->
+		Contact Denney Office Furniture
+	</h1>
+
+	<!--<div class="page-row">
+		@Html.Topic("contact")
+	</div>-->
+	<div class="row">
+		<h1>Our Address</h1>
+		<hr/>
+		<p>
+		Denney Office Furniture<br/>
+		120 Factory Street<br/>
+		Gallatin Tn 37066
+		</p>
+	</div>
+	<div class="row">
+		<h1>Call</h1>
+		<hr/>
+		<p><strong>Phone: (615) 943-8651 | Fax: (615) 452-4385</strong></p>
+	</div>
+	<div class="row">
+		<h1>Email</h1>
+		<hr/>
+	</div>
+	<div class="row">
+		<div class="col-md-4"></div>
+		<div class="col-md-4">
+			@using(Html.BeginForm())
+			{
+				<div class="form contact-form">
+					@Html.EditorEntryFor(m => m.From)
+					@Html.EditorEntryFor(m => m.Phone)
+					@Html.EditorEntryFor(m => m.Email)
+					@Html.EditorEntryFor(m => m.Subject)
+					@Html.EditorEntryFor(m => m.Message)
+
+					@if(Model.UseCaptcha)
+				{
+						@Html.CaptchaEntryFor(
+						expression: m => m.CaptchaCode,
+						scope: string.Concat(ControllerNames.ContactUs, ActionNames.Index))
+				}
+
+					<div class="page-action-bar contact-us-actions">
+						<input style="width:50%;" type="submit" class="btn btn-primary submit-contact-button" value="@Html.StringResource("common.cs.61")" />
+					</div>
+				</div>
+			}
+		</div>
+		<div class="col-md-4"></div>
+	</div>
+</div>

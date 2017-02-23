@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<script src="//use.typekit.net/gpr7svo.js"></script>
+	@Html.Partial("_Head")
+<style type="text/css">
+ 	div.background {
+ 		background: linear-gradient(to bottom right, #254C85 , #E3E3E3);
+ 	}
+ 	div.container {
+    	background-color: white;
+    	padding-left:0;
+    	padding-right:0;
+    }
+
+    div.body-background {
+    	background-color:initial;
+    }
+    div.header-row {
+    background-color:white;
+    border-bottom: solid 4px #A10518;
+    margin-left:0;
+    margin-right:0;
+    }
+    div.navbar {
+    border-radius:0;
+    background-color:white;
+    margin-bottom:0 !important;
+    }
+    a.dropdown-toggle {
+    color: #0064A6 !important;
+    }
+ div.footer {
+    padding-top: 0;
+    /*background-color:#223947;*/
+    border-top:0;
+    padding-left:0;
+    }
+div.footer > div.container {
+    border-top: solid 4px #0064A6;
+    padding-top:5px;
+    }
+div.footer div.col-sm-12 {
+    text-align:center;
+    }
+div.sub-footer {
+    text-align:center;
+    }
+div.body-wrapper {
+	padding-left:2rem;
+	padding-right:2rem;
+	color:#444444;
+}
+div.breadcrumb {
+	padding-left:2rem;
+	padding-right:2rem;
+	color:#444444;
+	height:2.8rem;
+	border-radius:0;
+}
+a.user-link {
+	color:#337ab7;
+}
+.btn-default {
+    color: #fff;
+    background-color: #7A8192;
+    border-color: #7A7A7A;
+    text-shadow:none;
+}
+div.container {
+	background-color:#F8F8F8;
+}
+div.header-row, div.navbar {
+	background-color:initial;
+}
+div.order-details {
+	background: #fff;
+} 
+div.notice-wrap {
+	display:none; /*removes Customer Level section on Account page*/
+}
+div.level-price {
+	display:none; /*removes Customer Level pricing on Product Group and Product Detail pages*/
+	}
+div.regular-price { /*adjusts font for Regular Pricing on Product Group and Product Detail pages*/
+	font-weight:800;
+	font-size: 22px !important;
+	color:black;
+	}
+	div.grid-item-name-wrap {
+    font-size:22px;
+    }
+</style>
+</head>
+<body>
+	@Html.Partial("_BodyOpen")
+	<div class="background">
+		<div class="body-background">
+			<div class="container">
+				<div class="row header-row">
+					<div class="col-sm-5 logo-wrap">
+						@Html.Topic("Template.Logo")
+					</div>
+					<div class="col-sm-7 text-right-sm header-cart">
+						@Html.Action(ActionNames.Index, ControllerNames.UserLinks)
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				<div class="navbar navbar-default topnav" role="navigation">
+					<div class="navbar-header" style="width:100%;">
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#top-nav-collapse">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand visible-xs menu-label" data-toggle="collapse" data-target="#top-nav-collapse" href="#">
+							@Html.StringResource("responsiveskin.menulabel")
+						</a>
+					</div>
+					<div class="navbar-collapse collapse" id="top-nav-collapse">
+						<ul class="nav navbar-nav">
+							<!--CATEGORIES-->
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+									@Html.StringResource("responsiveskin.categorymenulabel")
+									<span class="caret"></span>
+								</a>
+								@Html.XmlPackage("entitymenu", new { entitytype = "category" })
+							</li>
+							<!--CATALOG-->
+							<li class="dropdown">
+								<a href="/topic/catalog" class="dropdown-toggle">
+									Catalog
+								</a>
+							</li>
+							<!--ACCOUNT-->
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+									@Html.StringResource("responsiveskin.accountmenulabel")
+									<span class="caret"></span>
+								</a>
+								<ul class="dropdown-menu">
+									<li>
+										<a href="@Url.Action(ActionNames.Index, ControllerNames.Account)">
+											@Html.StringResource("responsiveskin.accountlabel")
+										</a>
+									</li>
+									<li>
+										<a href="@Url.Action(ActionNames.Index, ControllerNames.Account)#OrderHistory">
+											@Html.StringResource("responsiveskin.orderhistorylabel")
+										</a>
+									</li>
+									<li>
+										<a href="/downloads">
+											My Downloads
+										</a>
+									</li>
+									@if(AppLogic.AppConfigBool("ShowWishButtons"))
+									{
+										<li>
+											<a href="#miniwish-modal" data-toggle="modal">
+												@Html.StringResource("responsiveskin.wishlistlabel")
+											</a>
+										</li>
+									}
+									<li class="divider"></li>
+									<li>
+										@Html.Action(ActionNames.LoginLinks, ControllerNames.UserLinks)
+									</li>
+								</ul>
+							</li>
+							<!--ABOUT-->
+							<li class="dropdown">
+								<a href="/topic/about" class="dropdown-toggle">
+									About
+								</a>
+							</li>
+							<!--CONTACT-->
+							<li class="dropdown">
+								<a href="/contactus/" class="dropdown-toggle">
+									Contact
+								</a>
+							</li>
+						</ul>
+						<div class="nav navbar-nav navbar-right navbar-form search-wrap">
+							@Html.Partial(ViewNames.SearchPartial)
+						</div>
+					</div>
+				</div>
+				<div class="notices">
+					@Html.Action(ActionNames.Index, ControllerNames.Notice)
+				</div>
+				@Html.Action(
+					actionName: "Detail",
+					controllerName: "Breadcrumb",
+					routeValues: new
+					{
+						PageTitle = ViewBag.PageTitle,
+						PathInfo = ViewBag.PathInfo
+					})
+				<div class="body-wrapper">
+					<!-- Contents start -->
+					@RenderBody()
+					<!-- Contents end -->
+				</div>
+			</div>
+		</div>
+		<div class="footer">
+			<div class="container">
+				@Html.Topic("Template.footer")
+				<div class="sub-footer">
+					@Html.Topic("Template.SubFooter")
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Minicart modal -->
+	@Html.Action(ActionNames.Index, ControllerNames.Minicart, new { cartType = CartTypeEnum.ShoppingCart })
+
+	<!-- Miniwish modal -->
+	@Html.Action(ActionNames.Index, ControllerNames.Minicart, new { cartType = CartTypeEnum.WishCart })
+
+	<!-- Minicart and miniwish resources (javascript and overlay html) -->
+	@Html.Action(ActionNames.MinicartResources, ControllerNames.Minicart)
+	
+	@Html.Partial("_BodyClose")
+</body>
+</html>
