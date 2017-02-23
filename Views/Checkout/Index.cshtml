@@ -134,7 +134,18 @@
 					}
 				</div>
 
-				
+				@if(Model.DisplayShippingSections && Model.ShippingInfoIsRequired)
+				{
+					<div class="checkout-block shipping-method @GetStatusCssClass(Model.ShippingMethodStageState)">
+						<h3 class="checkout-header">
+							<i class="checkout-status @GetStatusIcon(Model.ShippingMethodStageState)"></i>
+							@Html.StringResource("checkout.header.shippingvia")
+						</h3>
+						<div class="checkout-content">
+							@Html.Action(ActionNames.ShippingMethod, ControllerNames.CheckoutShippingMethod)
+						</div>
+					</div>
+				}
 
 				@if(!Model.CheckoutIsOffsiteOnly)
 				{
